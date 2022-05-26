@@ -1,6 +1,6 @@
 import React from 'react'; // eslint-disable-line import/no-extraneous-dependencies, no-use-before-define
 import {
-    Image, TextInput, TouchableOpacity, View
+    Image, Pressable, TextInput, TouchableOpacity, View
 } from 'react-native';
 import Country from './country';
 import Flags from './resources/flags';
@@ -207,20 +207,12 @@ export default class PhoneInput<
         return this.props.accessibilityLabel || 'Telephone input';
     }
 
-    focus() {
-        this.inputPhone.focus();
-    }
-
-    blur() {
-        this.inputPhone.blur();
-    }
-
     render() {
         const { iso2, displayValue, disabled } = this.state;
         const country = this.getAllCountries().find((c) => c.iso2 === iso2);
         return (
             <View style={[styles.container, this.props.style]}>
-                <TouchableOpacity
+                <Pressable
                     onPress={this.onPressFlag}
                     disabled={disabled}
                     accessibilityRole="imagebutton"
@@ -239,7 +231,7 @@ export default class PhoneInput<
                             style={[styles.flag, this.props.flagStyle]}
                         />
                     )}
-                </TouchableOpacity>
+                </Pressable>
                 <View style={{ flex: 1, marginLeft: this.props.offset }}>
                     {this.props.textComponent && (
                         <>
