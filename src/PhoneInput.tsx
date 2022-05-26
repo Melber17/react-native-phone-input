@@ -61,6 +61,10 @@ export default class PhoneInput<
         }
     }
 
+    onChangeText(text: string) {
+        this.onChangePhoneNumber(text);
+    }
+
     onChangePhoneNumber = (number) => {
         const actionAfterSetState = this.props.onChangePhoneNumber
             ? (displayValue: string, iso2: string) => {
@@ -209,10 +213,6 @@ export default class PhoneInput<
 
     blur() {
         this.inputPhone.blur();
-    }
-
-    onChangeText(text: string) {
-        this.onChangePhoneNumber(text);
     }
 
     render() {
