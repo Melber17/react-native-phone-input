@@ -240,7 +240,7 @@ export default class PhoneInput<
                         />
                     )}
                 </TouchableOpacity>
-                <View style={{ flex: 1, marginLeft: this.props.offset || 10 }}>
+                <View style={{ flex: 1, marginLeft: this.props.offset }}>
                     {this.props.textComponent && (
                         <>
                             {this.props.textComponent({
