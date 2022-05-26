@@ -1,5 +1,7 @@
 import React from 'react'; // eslint-disable-line import/no-extraneous-dependencies, no-use-before-define
-import { Image, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+    Image, TextInput, TouchableOpacity, View
+} from 'react-native';
 import Country from './country';
 import Flags from './resources/flags';
 import PhoneNumber from './PhoneNumber';
@@ -39,8 +41,7 @@ export default class PhoneInput<
             initialCountry = PhoneNumber.getCountryCodeOfNumber(initialValue);
             displayValue = this.format(initialValue, initialCountry);
         } else {
-            const countryData =
-                PhoneNumber.getCountryDataByCode(initialCountry);
+            const countryData = PhoneNumber.getCountryDataByCode(initialCountry);
             initialValue = countryData ? `+${countryData.dialCode}` : '';
             displayValue = initialValue;
         }
@@ -63,8 +64,8 @@ export default class PhoneInput<
     onChangePhoneNumber = (number) => {
         const actionAfterSetState = this.props.onChangePhoneNumber
             ? (displayValue: string, iso2: string) => {
-                  this.props.onChangePhoneNumber?.(displayValue, iso2);
-              }
+                this.props.onChangePhoneNumber?.(displayValue, iso2);
+            }
             : null;
         this.updateValue(number, actionAfterSetState);
     };
@@ -127,8 +128,7 @@ export default class PhoneInput<
                         value: `+${countryData.dialCode}`,
                     },
                     () => {
-                        if (this.props.onSelectCountry)
-                            this.props.onSelectCountry(iso2);
+                        if (this.props.onSelectCountry) { this.props.onSelectCountry(iso2); }
                     }
                 );
             }
