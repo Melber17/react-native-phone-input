@@ -169,7 +169,7 @@ export interface ReactNativePhoneInputProps<
     /**
      * Render function to replace the default flag
      */
-    renderFlag?: ({ imageSource }: { imageSource: number }) => Element;
+    renderFlag?: ({ imageSource }: { imageSource: number }) => JSX.Element;
 }
 
 export default class ReactNativePhoneInput<
