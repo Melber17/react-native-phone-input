@@ -244,7 +244,9 @@ export default class PhoneInput<
                     {this.props.textComponent && (
                         <>
                             {this.props.textComponent({
-                                onChangeText: this.onChangeText,
+                                onChangeText: (text) => {
+                                    this.onChangePhoneNumber(text);
+                                },
                                 value: displayValue
                             })}
                         </>
