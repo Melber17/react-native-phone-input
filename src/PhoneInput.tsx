@@ -1,7 +1,5 @@
 import React from 'react'; // eslint-disable-line import/no-extraneous-dependencies, no-use-before-define
-import {
-    Image, TextInput, TouchableOpacity, View
-} from 'react-native';
+import { Image, TextInput, TouchableOpacity, View } from 'react-native';
 import Country from './country';
 import Flags from './resources/flags';
 import PhoneNumber from './PhoneNumber';
@@ -9,8 +7,9 @@ import styles from './styles';
 import CountryPicker from './CountryPicker';
 import { ReactNativePhoneInputProps } from './typings';
 
-export default class PhoneInput<TextComponentType extends React.ComponentType = typeof TextInput>
-    extends React.Component<ReactNativePhoneInputProps<TextComponentType>, any> {
+export default class PhoneInput<
+    TextComponentType extends React.ComponentType = typeof TextInput
+> extends React.Component<ReactNativePhoneInputProps<TextComponentType>, any> {
     static setCustomCountriesData(json) {
         Country.setCustomCountriesData(json);
     }
@@ -22,13 +21,9 @@ export default class PhoneInput<TextComponentType extends React.ComponentType = 
     constructor(props) {
         super(props);
 
-        let {
-            initialCountry, initialValue
-        } = this.props;
+        let { initialCountry, initialValue } = this.props;
 
-        const {
-            countriesList, disabled
-        } = this.props;
+        const { countriesList, disabled } = this.props;
 
         if (countriesList) {
             Country.setCustomCountriesData(countriesList);
@@ -44,7 +39,8 @@ export default class PhoneInput<TextComponentType extends React.ComponentType = 
             initialCountry = PhoneNumber.getCountryCodeOfNumber(initialValue);
             displayValue = this.format(initialValue, initialCountry);
         } else {
-            const countryData = PhoneNumber.getCountryDataByCode(initialCountry);
+            const countryData =
+                PhoneNumber.getCountryDataByCode(initialCountry);
             initialValue = countryData ? `+${countryData.dialCode}` : '';
             displayValue = initialValue;
         }
@@ -67,11 +63,11 @@ export default class PhoneInput<TextComponentType extends React.ComponentType = 
     onChangePhoneNumber = (number) => {
         const actionAfterSetState = this.props.onChangePhoneNumber
             ? (displayValue: string, iso2: string) => {
-                this.props.onChangePhoneNumber?.(displayValue, iso2);
-            }
+                  this.props.onChangePhoneNumber?.(displayValue, iso2);
+              }
             : null;
         this.updateValue(number, actionAfterSetState);
-    }
+    };
 
     onPressFlag = () => {
         if (this.props.onPressFlag) {
@@ -80,7 +76,7 @@ export default class PhoneInput<TextComponentType extends React.ComponentType = 
             if (this.state.iso2) this.picker.selectCountry(this.state.iso2);
             this.picker.show();
         }
-    }
+    };
 
     // eslint-disable-next-line class-methods-use-this
     getPickerData() {
@@ -89,7 +85,7 @@ export default class PhoneInput<TextComponentType extends React.ComponentType = 
             image: Flags.get(country.iso2),
             label: country.name,
             dialCode: `+${country.dialCode}`,
-            iso2: country.iso2
+            iso2: country.iso2,
         }));
     }
 
@@ -115,10 +111,7 @@ export default class PhoneInput<TextComponentType extends React.ComponentType = 
     }
 
     getNumberType() {
-        return PhoneNumber.getNumberType(
-            this.state.value,
-            this.state.iso2
-        );
+        return PhoneNumber.getNumberType(this.state.value, this.state.iso2);
     }
 
     getISOCode = () => this.state.iso2;
@@ -131,28 +124,26 @@ export default class PhoneInput<TextComponentType extends React.ComponentType = 
                     {
                         iso2,
                         displayValue: this.format(`+${countryData.dialCode}`),
-                        value: `+${countryData.dialCode}`
+                        value: `+${countryData.dialCode}`,
                     },
                     () => {
-                        if (this.props.onSelectCountry) this.props.onSelectCountry(iso2);
+                        if (this.props.onSelectCountry)
+                            this.props.onSelectCountry(iso2);
                     }
                 );
             }
         }
-    }
+    };
 
     setValue = (number) => {
         if (this.state.value !== number) {
             this.updateValue(number);
         }
-    }
+    };
 
     isValidNumber() {
         if (this.state.value.length < 4) return false;
-        return PhoneNumber.isValidNumber(
-            this.state.value,
-            this.state.iso2
-        );
+        return PhoneNumber.isValidNumber(this.state.value, this.state.iso2);
     }
 
     format(text, iso2?) {
@@ -186,15 +177,18 @@ export default class PhoneInput<TextComponentType extends React.ComponentType = 
             displayValue = this.format(modifiedNumber);
         }
 
-        this.setState({
-            iso2,
-            displayValue,
-            value: modifiedNumber,
-        }, () => {
-            if (actionAfterSetState) {
-                actionAfterSetState(displayValue, iso2);
+        this.setState(
+            {
+                iso2,
+                displayValue,
+                value: modifiedNumber,
+            },
+            () => {
+                if (actionAfterSetState) {
+                    actionAfterSetState(displayValue, iso2);
+                }
             }
-        });
+        );
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -217,10 +211,13 @@ export default class PhoneInput<TextComponentType extends React.ComponentType = 
         this.inputPhone.blur();
     }
 
+    onChangeText(text: string) {
+        this.onChangePhoneNumber(text);
+    }
+
     render() {
         const { iso2, displayValue, disabled } = this.state;
         const country = this.getAllCountries().find((c) => c.iso2 === iso2);
-        const TextComponent: any = this.props.textComponent || TextInput;
         return (
             <View style={[styles.container, this.props.style]}>
                 <TouchableOpacity
@@ -244,22 +241,14 @@ export default class PhoneInput<TextComponentType extends React.ComponentType = 
                     )}
                 </TouchableOpacity>
                 <View style={{ flex: 1, marginLeft: this.props.offset || 10 }}>
-                    <TextComponent
-                        ref={(ref) => {
-                            this.inputPhone = ref;
-                        }}
-                        accessibilityLabel={this.getAccessibilityLabel()}
-                        editable={!disabled}
-                        autoCorrect={false}
-                        style={[styles.text, this.props.textStyle]}
-                        onChangeText={(text) => {
-                            this.onChangePhoneNumber(text);
-                        }}
-                        keyboardType="phone-pad"
-                        underlineColorAndroid="rgba(0,0,0,0)"
-                        value={displayValue}
-                        {...this.props.textProps}
-                    />
+                    {this.props.textComponent && (
+                        <>
+                            {this.props.textComponent({
+                                onChangeText: this.onChangeText,
+                                value: displayValue
+                            })}
+                        </>
+                    )}
                 </View>
 
                 <CountryPicker

@@ -53,7 +53,9 @@ export interface ReactNativeCountryPickerState {
     selectedCountry: any;
 }
 
-export interface ReactNativePhoneInputProps<TextComponentType extends React.ComponentType = typeof TextInput> {
+export interface ReactNativePhoneInputProps<
+    TextComponentType extends React.ComponentType = typeof TextInput
+> {
     /**
      * Override accessibility label for telephone input
      */
@@ -97,7 +99,13 @@ export interface ReactNativePhoneInputProps<TextComponentType extends React.Comp
     /**
      * The input component to use
      */
-    textComponent?: TextComponentType;
+    textComponent?: ({
+        onChangeText,
+        value,
+    }: {
+        onChangeText: (text: string) => void;
+        value: string;
+    }) => JSX.Element;
     /**
      * Distance between flag and phone number
      */
@@ -170,62 +178,62 @@ export default class ReactNativePhoneInput<
     picker?: React.Ref<ThisType<ReactNativePhoneInput>>;
 
     /**
-    * Return true if current phone number is valid
-    */
+     * Return true if current phone number is valid
+     */
     isValidNumber: () => boolean;
 
     /**
-    * Return true type of current phone number
-    */
+     * Return true type of current phone number
+     */
     getNumberType: () => string;
 
     /**
-    * Return current phone number without display format
-    */
+     * Return current phone number without display format
+     */
     getValue: () => string;
 
     /**
-    * Return flag image
-    */
+     * Return flag image
+     */
     getFlag: (iso2: string) => ImageRequireSource;
 
     /**
-    * Return country object in country picker
-    */
+     * Return country object in country picker
+     */
     getAllCountries: () => CountriesListItem;
 
     /**
-    * Return country object with flag image
-    */
+     * Return country object with flag image
+     */
     getPickerData: () => PickerData;
 
     /**
-    * Focus the phone input
-    */
+     * Focus the phone input
+     */
     focus: () => void;
 
     /**
-    * Blur the phone input
-    */
+     * Blur the phone input
+     */
     blur: () => void;
 
     /**
-    * Set phone input to specific country
-    */
+     * Set phone input to specific country
+     */
     selectCountry: (iso2: string) => void;
 
     /**
-    * Set phone input value
-    */
+     * Set phone input value
+     */
     setValue: (value: string) => void;
 
     /**
-    * Return country dial code of current phone number
-    */
+     * Return country dial code of current phone number
+     */
     getCountryCode: () => string;
 
     /**
-    * Return country iso code of current phone number
-    */
+     * Return country iso code of current phone number
+     */
     getISOCode: () => string;
 }
