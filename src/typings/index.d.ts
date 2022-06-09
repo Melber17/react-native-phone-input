@@ -45,6 +45,7 @@ export interface ReactNativeCountryPickerProps {
     onSubmit?: Function;
     pickerBackgroundColor?: string;
     itemStyle?: ViewStyle;
+    initialValue?: string;
 }
 
 export interface ReactNativeCountryPickerState {
@@ -126,6 +127,8 @@ export interface ReactNativePhoneInputProps<
      * Cancel word
      */
     cancelText?: string;
+
+    initialValue?: string;
     /**
      * Cancel word text style
      */
